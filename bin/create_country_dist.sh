@@ -16,9 +16,14 @@ cd "$directory" || exit
 #Count up how many times each user name appears
 #Pipe into awk command that grabs the username and the number of times it appears
 #Print that and put it in the tempFile
-find .  -name "failed_login_data.txt" -exec cat {} +  | awk 'match($0, /[a-zA-Z]{3} [0-9 ]+ [a-zA-Z0-9\w-]+ ([0-9.]+)/, groups) {print groups[1]}' | sort -t . -k 1 > output.txt
-#cd - || exit
-#join "$tempFile" ./etc/country_IP_map.txt > output.txt
+find .  -name "failed_login_data.txt" -exec cat {} +  | awk 'match($0, /[a-zA-Z]{3} [0-9 ]+ [a-zA-Z0-9\w-]+ ([0-9.]+)/, groups) {print groups[1]}' | sort -t . -k 1 > "$tempFile"
+
+cd - || exit
+join "$tempFile" ./etc/country_IP_map.txt > "$tempFile"
+
+#To do: pipe join command into awk to grab country codes
+#Then pipe into sort and uniq command
+#Then pipe into another awk command to print the country codes and their occurrence in the data.addRow format
 
 #cd into previous directory or exit
 #cd - || exit
