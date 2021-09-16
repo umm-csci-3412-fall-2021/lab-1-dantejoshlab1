@@ -5,6 +5,7 @@ directory=$1
 
 #Make a temporary file
 tempFile=$(mktemp /tmp/tmpFile.XXXXXX)
+tempFile2=$(mktemp /tmp/tmpFile2.XXXXXX)
 
 #cd into the directory stored in the variable directory or exit if not possible
 cd "$directory" || exit
@@ -19,19 +20,11 @@ cd "$directory" || exit
 find .  -name "failed_login_data.txt" -exec cat {} +  | awk 'match($0, /[a-zA-Z]{3} [0-9 ]+ [a-zA-Z0-9\w-]+ ([0-9.]+)/, groups) {print groups[1]}' | sort -t . -k 1 > "$tempFile"
 
 cd - || exit
-join "$tempFile" ./etc/country_IP_map.txt > "$tempFile"
-
-#To do: pipe join command into awk to grab country codes
-#Then pipe into sort and uniq command
-#Then pipe into another awk command to print the country codes and their occurrence in the data.addRow format
-
-#cd into previous directory or exit
-#cd - || exit
+join "$tempFile" ./etc/country_IP_map.txt | awk '{print $2}' |  sort | uniq -c | awk '{print "data.addRow([\x27"$2"\x27, " $1"]);"}'  > "$tempFile2"
 
 #Call wrap_contents to wrap the tempFile in between the username_dist header and footer
 #Put that in a file called username_dist.html in the data directory
-#./bin/wrap_contents.sh "$tempFile"  html_components/username_dist data/username_dist.html
+./bin/wrap_contents.sh "$tempFile2"  html_components/country_dist data/country_dist.html
 
-#Remove tempFile
-#rm "$tempFile"
-
+rm "$tempFile"
+rm "$tempFile2"
