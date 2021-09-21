@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-scratchDir=$(mktemp -d)
+#scratchDir=$(mktemp -d)
+
 for var in "$@"
 do
 	name=$(basename "$var" .tgz)
-	tar -zxf "$var" --directory "$scratchDir"
-	./bin/process_client_logs.sh "$scratchDir"/"$name" 
+        mkdir ./test3/"$name"
+	tar -xzf "$var" --directory ./test3/"$name"
+	./bin/process_client_logs.sh ./test3/"$name" 
 done
