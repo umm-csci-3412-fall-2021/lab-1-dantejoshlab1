@@ -31,7 +31,7 @@ join "$tempFile" ./etc/country_IP_map.txt |  awk '{print $2}' |  sort | uniq -c 
 
 #Call wrap_contents to wrap tempFile2 in between the country_dist  header and footer
 #Put that in a file called country_dist.html in the data directory
-./bin/wrap_contents.sh "$tempFile2"  html_components/country_dist data/country_dist.html
+./bin/wrap_contents.sh "$tempFile2"  html_components/country_dist "$directory"/country_dist.html
 
 #Remove the temporary files
 rm "$tempFile"

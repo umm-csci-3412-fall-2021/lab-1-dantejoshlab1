@@ -23,7 +23,7 @@ cd - || exit
 
 #Call wrap_contents to wrap the tempFile in between the username_dist header and footer
 #Put that in a file called username_dist.html in the data directory
-./bin/wrap_contents.sh "$tempFile"  html_components/username_dist data/username_dist.html
+./bin/wrap_contents.sh "$tempFile"  html_components/username_dist "$directory"/username_dist.html
 
 #Remove tempFile
 rm "$tempFile"
