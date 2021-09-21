@@ -16,7 +16,7 @@ cd "$directory" || exit
 #Count up how many times each user name appears
 #Pipe into awk command that grabs the username and the number of times it appears
 #Print that and put it in the tempFile
-find .  -name "failed_login_data.txt" -exec cat {} +  | awk 'match($0, /[a-zA-Z]{3} [0-9 ]+ ([a-zA-Z0-9\w-]+)/, groups) {print groups[1]}' | sort| uniq -c | awk 'match($0, / + ([0-9]+) ([a-zA-Z0-9\w-]+)/, groups) {print "data.addRow([\x27"groups[2]"\x27, " groups[1]"]);"}' > "$tempFile"
+find .  -name "failed_login_data.txt" -exec cat {} +  | awk 'match($0, /[a-zA-Z]{3} [0-9 ]+ ([-a-zA-Z0-9\_]+)/, groups) {print groups[1]}' | sort| uniq -c | awk 'match($0, / + ([0-9]+) ([-a-zA-Z0-9\_]+)/, groups) {print "data.addRow([\x27"groups[2]"\x27, " groups[1]"]);"}' > "$tempFile"
 
 #cd into previous directory or exit
 cd - || exit
