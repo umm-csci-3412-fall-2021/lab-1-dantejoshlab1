@@ -19,4 +19,6 @@ cd - || exit
 #Put that in a file with the path data/failed_login_summary.html
 ./bin/wrap_contents.sh  "$tempFile" ./html_components/summary_plots "$directory"/failed_login_summary.html
 
+#Remove the temp file
+rm "$tempFile"
 
