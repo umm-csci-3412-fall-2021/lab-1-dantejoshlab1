@@ -23,7 +23,7 @@ cd - || exit
 
 #Call wrap_contents to wrap the tempFile in between the hours_dist header and footer
 #Put that in a file called hours_dist.html in the data directory
-./bin/wrap_contents.sh "$tempFile"  html_components/hours_dist data/hours_dist.html
+./bin/wrap_contents.sh "$tempFile"  html_components/hours_dist "$directory"/hours_dist.html
 
 #Remove tempFile
 rm "$tempFile"

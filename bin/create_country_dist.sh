@@ -15,7 +15,7 @@ cd "$directory" || exit
 #Pipe into awk command that gets the all the IP addresses from the combined file
 #Sort IP addresses 
 #Put that output in the tempFile
-find .  -name "failed_login_data.txt" -exec cat {} +  | awk 'match($0, /[a-zA-Z]{3} [0-9 ]+ [a-zA-Z0-9\w-]+ ([0-9.]+)/, groups) {print groups[1]}' | sort -t . -k 1 > "$tempFile"
+find .  -name "failed_login_data.txt" -exec cat {} +  | awk 'match($0, /[a-zA-Z]{3} [0-9 ]+ [-a-zA-Z0-9\_]+ ([0-9.]+)/, groups) {print groups[1]}' | sort -t . -k 1 > "$tempFile"
 
 
 #cd into previous working directory or exit if failure
@@ -31,7 +31,7 @@ join "$tempFile" ./etc/country_IP_map.txt |  awk '{print $2}' |  sort | uniq -c 
 
 #Call wrap_contents to wrap tempFile2 in between the country_dist  header and footer
 #Put that in a file called country_dist.html in the data directory
-./bin/wrap_contents.sh "$tempFile2"  html_components/country_dist data/country_dist.html
+./bin/wrap_contents.sh "$tempFile2"  html_components/country_dist "$directory"/country_dist.html
 
 #Remove the temporary files
 rm "$tempFile"
